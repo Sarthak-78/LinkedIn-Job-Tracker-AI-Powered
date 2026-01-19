@@ -18,6 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.use('/preferences', preferenceRoutes);
+app.use('/profile', require('./routes/profileRoutes'));
 app.use('/agent', require('./routes/agentRoutes'));
 
 app.get('/', (req, res) => {

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PreferenceForm from './components/PreferenceForm';
+import ProfileForm from './components/ProfileForm';
 import PreferenceDisplay from './components/PreferenceDisplay';
 import axios from 'axios';
 
@@ -33,6 +34,7 @@ function App() {
       <main className="grid-layout">
         <section>
           <PreferenceForm onSave={handleSave} />
+          <ProfileForm onSave={handleSave} />
         </section>
 
         <section>

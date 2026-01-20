@@ -50,7 +50,7 @@ echo 'export OPENAI_API_KEY="your_api_key_here"' >> ~/.zshrc
 source ~/.zshrc
 ```
 
-**Steps To Use**
+# Steps To Use
 -Step 1: Fork the project in your repository and make a clone of it.
 -Step 2: Setup MongoDB in your system for using the app otherwise it will not run 
 -Step 3: After this in /backend  and /frontend folder write <code>npm i</code> to download the node modules

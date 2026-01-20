@@ -31,12 +31,14 @@ router.post('/search', async (req, res) => {
         });
 
         // 4. Construct Task
-        let taskDescription = `MISSION: Find and Apply to the jobs that BEST MATCH the candidate's profile. You must act as an intelligent job seeker.\n\n`;
+        let taskDescription = `MISSION: Find the PERFECT job match for the candidate's profile. You must act as an intelligent job seeker.\n\n`;
 
         taskDescription += `STRICT CONSTRAINTS (Follow these patterns):\n`;
         taskDescription += `1. SKIP any job that is already marked as "Applied", "Easy Applied", or "Application Submitted".\n`;
         taskDescription += `2. AVOID jobs marked as "Viewed" if there are unviewed options available. Prioritize fresh opportunities.\n`;
-        taskDescription += `3. ANALYZE job descriptions. Only apply if the job matches at least 60% of the User's Core Skills. Do not apply to irrelevant roles.\n\n`;
+        taskDescription += `3. ANALYZE job descriptions carefully. Only consider jobs that match at least 90% of the User's Core Skills and experience requirements. Do not consider irrelevant roles.\n`;
+        taskDescription += `4. STOP IMMEDIATELY once you find the first perfect match. Do not continue searching or applying to multiple jobs.\n`;
+        taskDescription += `5. MATCHING PRIORITY: Check job TITLE first, then SKILLSET. If both match perfectly, accept immediately without checking other conditions.\n\n`;
 
         taskDescription += `CANDIDATE DATE FOR APPLICATIONS:\n`;
         taskDescription += `- Target Role: ${preferences.role}\n`;
@@ -58,26 +60,30 @@ router.post('/search', async (req, res) => {
 
         taskDescription += `\n\nEXECUTION PLAN:\n`;
         taskDescription += `1. Open LinkedIn Job Search.\n`;
-        taskDescription += `2. Search for: "${preferences.role}" in "${preferences.locations}".\n`;
+        taskDescription += `2. Search for: "${preferences.role} ${preferences.skills.join(' ')}" in "${preferences.locations}".\n`;
         taskDescription += `3. Filter by "Date Posted" (Past 24 hours/Past Week) to find fresh jobs.\n`;
         taskDescription += `4. Scan the list. For each job, check if "Applied" or "Viewed" appears.\n`;
         taskDescription += `5. If CLEAN (not applied), open the job details.\n`;
-        taskDescription += `6. Verify the "Skills" match. If good, proceed to Apply.\n`;
-        taskDescription += `7. Fill application questions using the Candidate Data & Portfolio above.\n`;
-        taskDescription += `8. Submit application. Repeat for the next best match.`;
+        taskDescription += `6. MATCHING PROCESS:\n`;
+        taskDescription += `   a) First, check if the job TITLE matches the target role: "${preferences.role}"\n`;
+        taskDescription += `   b) Then, check if the SKILLSET matches: ${preferences.skills.join(', ')}\n`;
+        taskDescription += `   c) If BOTH title and skills match perfectly (90%+), immediately accept this job and stop searching.\n`;
+        taskDescription += `   d) Only if title/skills don't match well enough, then check other requirements like experience and location.\n`;
+        taskDescription += `7. If it's a PERFECT MATCH, STOP the search and present the job to the user for manual application.\n`;
+        taskDescription += `8. Do NOT automatically apply or submit applications. Let the user decide.\n`;
 
         console.log('Starting MobileRun task:', taskDescription);
 
         const response = await client.tasks.run({
             llmModel: 'google/gemini-2.5-flash',
             task: taskDescription,
-            deviceId: 'df6b5ba5-2d80-4e8b-a197-afdfcff361ab',
+            deviceId: '',//Add your deviceId
         });
 
         console.log('MobileRun Task Started:', response.id);
 
         res.status(200).json({
-            message: 'Job search started on your device!',
+            message: 'Job search started! The agent will find your perfect job match and present it for you to apply manually.',
             taskId: response.id
         });
 

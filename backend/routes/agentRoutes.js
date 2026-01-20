@@ -79,7 +79,7 @@ router.post('/search', async (req, res) => {
         const response = await client.tasks.run({
             llmModel: 'google/gemini-3-flash',
             task: taskDescription,
-            deviceId: '013ee774-6686-4f59-84d4-639d2c01eeee',//Add your deviceId
+            deviceId: '',//Add your deviceId
         });
 
         console.log('MobileRun Task Started:', response.id);

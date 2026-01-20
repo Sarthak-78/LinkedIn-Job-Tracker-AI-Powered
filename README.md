@@ -49,3 +49,15 @@ For MacOS:
 echo 'export OPENAI_API_KEY="your_api_key_here"' >> ~/.zshrc
 source ~/.zshrc
 ```
+
+**Steps To Use**
+-Step 1: Fork the project in your repository and make a clone of it.
+-Step 2: Setup MongoDB in your system for using the app otherwise it will not run 
+-Step 3: After this in /backend  and /frontend folder write <code>npm i</code> to download the node modules
+-Step 4: Then add your API key (If the given api key has expired) and add search for deviceId in the <code>agentRoutes.js</code> in the /backend/routes
+-Step 5: Now you are all set to go start the server by writing <code>nodemon server.js</code> and start the frontend by <code>npm run dev</code>
+-Step 6: Connect your Mobile Phone and setup droidrun portal in it by watching this video <a href="https://youtu.be/4WT7FXJah2I">Click Here!</a>
+-Step 7: Connect with mobilerun framework and add your device ID 
+-Step 8: Now fill the necessary details in the web app and start your agent !
+
+Note : The Agent gives you the job roles which you have entered if you add a role which does not exist then it will not be able to send a job .
